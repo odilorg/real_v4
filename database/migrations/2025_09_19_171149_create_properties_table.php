@@ -47,10 +47,7 @@ return new class extends Migration
             $table->decimal('lat', 10, 7)->nullable();
             $table->decimal('lng', 10, 7)->nullable();
             // Laravel supports spatial columns; if your connection is MySQL 8+, this works:
-            if (Schema::getConnection()->getDriverName() === 'mysql') {
-                $table->point('geolocation')->nullable();
-                $table->polygon('map_bbox')->nullable();
-            }
+           
 
             // Address
             $table->string('country', 100)->nullable();
@@ -72,10 +69,10 @@ return new class extends Migration
             $table->index(['city', 'property_type']);
             $table->index(['lat', 'lng']);
         });
-        // Optional spatial indexes (MySQL only)
-        if (Schema::getConnection()->getDriverName() === 'mysql') {
-            DB::statement('CREATE SPATIAL INDEX properties_geolocation_spx ON properties (geolocation)');
-        }
+        // // Optional spatial indexes (MySQL only)
+        // if (Schema::getConnection()->getDriverName() === 'mysql') {
+        //     DB::statement('CREATE SPATIAL INDEX properties_geolocation_spx ON properties (geolocation)');
+        // }
     }
 
     /**
